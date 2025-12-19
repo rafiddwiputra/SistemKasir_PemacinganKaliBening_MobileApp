@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
+    android:id="@+id/main"
     android:background="@color/warna_utama">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,8 +38,8 @@
         <FrameLayout
             android:id="@+id/card_login"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="0dp"
             android:background="@drawable/kontainer_login"
             android:elevation="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -128,12 +129,12 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                            android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="15dp"
                         android:text="Lupa password? Klik di sini"
                         android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -155,7 +156,7 @@
                         android:paddingHorizontal="8dp"
                         android:text=" Login Dengan "
                         android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
 
                     <View
                         android:layout_width="0dp"
@@ -215,11 +216,14 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tv_register"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="25dp"
                     android:text="Belum punya akun? Klik di sini!"
+                    android:textSize="14sp"
+                    android:textStyle="normal"
                     android:textColor="@color/black" />
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -230,7 +234,7 @@
                     android:background="@drawable/bg_button"
                     android:text="Masuk"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
