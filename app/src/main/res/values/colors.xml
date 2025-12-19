@@ -2,4 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="warna_utama">#008080</color>
+    <color name="background">#F9F9F9</color>
+    <color name="gray_hint">#777777</color>
 </resources>
