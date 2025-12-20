@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/dashboardFragment"
+        android:title="Dashboard"
+        android:icon="@drawable/ikon_kasir"/>
+    <item
+        android:id="@+id/riwayatFragment"
+        android:title="Riwayat"
+        android:icon="@drawable/ikon_riwayat"/>
+    <item
+        android:id="@+id/stokIkanFragment"
+        android:title="Stok Ikan"
+        android:icon="@drawable/ikon_stokikan"/>
+
+</menu>

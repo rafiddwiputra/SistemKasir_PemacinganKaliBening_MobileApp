@@ -37,17 +37,16 @@
         <FrameLayout
             android:id="@+id/cardRegister"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:elevation="10dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/kontainer_login"
+            android:elevation="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_logoRegister"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintTop_toBottomOf="@+id/iv_logoRegister">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="24dp">
 
@@ -57,8 +56,7 @@
                     android:background="@drawable/kontainer_login2"
                     android:elevation="4dp"
                     android:orientation="vertical"
-                    android:padding="16dp"
-                    android:layout_margin="2dp">
+                    android:padding="16dp">
 
                     <TextView
                         android:id="@+id/tv_Daftar"
@@ -74,11 +72,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
                         android:text="Email:"
                         android:textColor="#333333"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="8dp" />
+                        android:textStyle="bold" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -86,6 +84,7 @@
                         android:background="@drawable/bg_input_container"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="16dp">
+
                         <EditText
                             android:id="@+id/et_reg_email"
                             android:layout_width="match_parent"
@@ -100,11 +99,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
                         android:text="Password:"
                         android:textColor="#333333"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="8dp" />
+                        android:textStyle="bold" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -112,6 +111,7 @@
                         android:background="@drawable/bg_input_container"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="16dp">
+
                         <EditText
                             android:id="@+id/et_reg_password"
                             android:layout_width="match_parent"
@@ -126,11 +126,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
                         android:text="Konfirmasi Password:"
                         android:textColor="#333333"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="8dp" />
+                        android:textStyle="bold" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -138,6 +138,7 @@
                         android:background="@drawable/bg_input_container"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="16dp">
+
                         <EditText
                             android:id="@+id/et_reg_konfirmPassword"
                             android:layout_width="match_parent"
@@ -152,11 +153,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
                         android:text="Nama Pengguna:"
                         android:textColor="#333333"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="8dp" />
+                        android:textStyle="bold" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -164,6 +165,7 @@
                         android:background="@drawable/bg_input_container"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="16dp">
+
                         <EditText
                             android:id="@+id/et_reg_namaPengguna"
                             android:layout_width="match_parent"
@@ -178,7 +180,7 @@
                     android:id="@+id/btn_daftar_akun"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="40dp"
                     android:layout_marginBottom="24dp"
                     android:background="@drawable/bg_button"
                     android:text="DAFTAR"

@@ -10,8 +10,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.dev_rafid.kalibeningapp.Dashboard.DashboardFragment
+import com.dev_rafid.kalibeningapp.FragmentActivity
 import com.dev_rafid.kalibeningapp.R
-import com.dev_rafid.kalibeningapp.RegisterActivity
+import com.dev_rafid.kalibeningapp.Register.RegisterActivity
 
 
 class LoginActivity : AppCompatActivity() {
@@ -24,6 +26,7 @@ class LoginActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         // 1. Menghubungkan variabel dengan ID yang ada/sudah dibuat di bagian file XML (activity_login.xml)
         val etUsername = findViewById<EditText>(R.id.et_username)
         val etPassword = findViewById<EditText>(R.id.et_password)
@@ -48,8 +51,8 @@ class LoginActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                     // Pindah ke halaman utama (KASIR) jika login sukses
-                    // val intent = Intent(this, MainActivity::class.java)
-                    // startActivity(intent)
+                     val intent = Intent(this, FragmentActivity::class.java)
+                     startActivity(intent)
                 } else {
                     Toast.makeText(this,
                         "Username atau Password salah!",
