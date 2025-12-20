@@ -10,13 +10,26 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.dev_rafid.kalibeningapp.Dashboard.DashboardFragment
 import com.dev_rafid.kalibeningapp.FragmentActivity
 import com.dev_rafid.kalibeningapp.R
 import com.dev_rafid.kalibeningapp.Register.RegisterActivity
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.GoogleApiActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.GoogleAuthProvider
+import androidx.activity.result.contract.ActivityResultContracts
+import android.widget.ImageView
 
 
 class LoginActivity : AppCompatActivity() {
+
+    // Inisialisasi Firebase
+    private lateinit var auth: FirebaseAuth
+    private lateinit var googleSignInClient: GoogleSignInClient // Ini yang baru
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -27,41 +40,92 @@ class LoginActivity : AppCompatActivity() {
             insets
         }
 
+        auth = FirebaseAuth.getInstance()
+
         // 1. Menghubungkan variabel dengan ID yang ada/sudah dibuat di bagian file XML (activity_login.xml)
-        val etUsername = findViewById<EditText>(R.id.et_username)
+        val etEmail = findViewById<EditText>(R.id.et_username)
         val etPassword = findViewById<EditText>(R.id.et_password)
         val btnMasuk = findViewById<Button>(R.id.btn_masuk)
         val tvRegister = findViewById<TextView>(R.id.tv_register)
+        val tvLupaPassword = findViewById<TextView>(R.id.tv_lupaPassword)
 
-        // 2. Memberikan aksi ketika tombol Masuk di klik
-        btnMasuk.setOnClickListener {
-            val username = etUsername.text.toString()
-            val password = etPassword.text.toString()
+        // Kode Bagian yang menangani Lupa Password
+        tvLupaPassword.setOnClickListener {
+            val email = etEmail.text.toString().trim()
 
-            // Validasi sederhan: Cek apakah input kosong
-            if (username.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Username dan Password tidak boleh kosong!!",
-                    Toast.LENGTH_SHORT
+            if (email.isEmpty()) {
+                Toast.makeText(
+                    this,
+                    "Masukkan email Anda di kolom Username/Email untuk reset password",
+                    Toast.LENGTH_LONG
                 ).show()
             } else {
-                // Contoh logika login yang sederhana (nanti bisa dihubungkan ke database/API)
-                if (username == "admin" && password == "123123") {
-                    Toast.makeText(this,
-                        "Login Berhasil",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    // Pindah ke halaman utama (KASIR) jika login sukses
-                     val intent = Intent(this, FragmentActivity::class.java)
-                     startActivity(intent)
-                } else {
-                    Toast.makeText(this,
-                        "Username atau Password salah!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                // Fungsi Firebase untuk kirim email reset password
+                auth.sendPasswordResetEmail(email)
+                    .addOnCompleteListener { task -> 
+                        if (task.isSuccessful) {
+                            Toast.makeText(
+                                this,
+                                "Email reset password telah di kirim ke: ${email}",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } else{
+                            Toast.makeText(this,
+                                "Gagal ${task.exception?.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
             }
         }
 
+        // Konfigurasi Google Sign-In
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id)) // Ini otomatis ada setelah ganti google-services.json
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+
+        val btnGoogle = findViewById<ImageView>(R.id.btn_google) // Pastikan ID di XML sudah sesuai
+        btnGoogle.setOnClickListener {
+            val signInIntent = googleSignInClient.signInIntent
+            googleLauncher.launch(signInIntent)
+        }
+
+        // 2. Memberikan aksi ketika tombol Masuk di klik
+        btnMasuk.setOnClickListener {
+            val email = etEmail.text.toString().trim()
+            val password = etPassword.text.toString().trim()
+
+            // Validasi sederhan: Cek apakah input kosong
+            if (email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Username dan Password tidak boleh kosong!!",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+                // Login Menggunakan Firebase
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(
+                            this,
+                            "Login Berhasil!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        // Pindah ke halaman utama (KASIR) jika login sukses
+                        val intent = Intent(this, FragmentActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }  else {
+                        Toast.makeText(this,
+                            "Login Gagal: ${task.exception?.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+            }
+        }
         // 3. Aksi ketika user belum memiliki akun
         tvRegister.setOnClickListener {
             // Kode untuk pindah halaman ke halaman register
@@ -73,5 +137,50 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
+
+    }
+    // Launcher untuk menangani hasil pilihan akun Google user
+    private val googleLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+            try {
+                val account = task.getResult(ApiException::class.java)!!
+                // Kirim token Google ke Firebase
+                firebaseAuthWithGoogle(account.idToken!!)
+            } catch (e: ApiException) {
+                Toast.makeText(this, "Google sign in failed: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    // Fungsi untuk menukarkan token Google dengan kredensial Firebase
+    private fun firebaseAuthWithGoogle(idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(this, "Login Google Berhasil!", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, FragmentActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Toast.makeText(this, "Autentikasi Firebase Gagal.", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
+    // Kode ini untuk ketika User sudah melakukan Registrasi dan data dari User tersebut sudah tersimpan di Firebase maka +
+    // User tidak perlu untuk melakukan Login ulang jadi langsung masuk ke dalam aplikasinya (halaman Dashboard/Kasir)
+    override fun onStart() {
+        super.onStart()
+        // Cek apakah ada user yang sedang login
+        val currentUser = auth.currentUser
+        if (currentUser !=null) {
+            // Jika ada User (sudah login sebelumnya), maka langsung pindah ke halaman Dashboard/Kasir
+            val intent = Intent(this, FragmentActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 }

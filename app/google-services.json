@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "863964141718",
+    "project_id": "kalibeningapp",
+    "storage_bucket": "kalibeningapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:863964141718:android:d46ea4f3a475b2d5874ab7",
+        "android_client_info": {
+          "package_name": "com.dev_rafid.kalibeningapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "863964141718-f0d105cak9f2dao3hnj4q37ko08oqibk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dev_rafid.kalibeningapp",
+            "certificate_hash": "da74d6cf8950cc85c4aea1e715f4c26f6ecf2676"
+          }
+        },
+        {
+          "client_id": "863964141718-geomm5dlgshkuu14a0bopb4ubl7h2068.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMvG_nBRFK3JAemQx2Tg9hCcjvadAKaCc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "863964141718-geomm5dlgshkuu14a0bopb4ubl7h2068.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

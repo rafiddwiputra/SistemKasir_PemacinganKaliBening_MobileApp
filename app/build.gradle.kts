@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -50,4 +51,15 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("androidx.navigation:navigation-fragment-ktx:2.9.6")
     implementation("androidx.navigation:navigation-ui-ktx:2.9.6")
+
+    // Import Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:34.7.0"))
+    // 2. Baris wajib untuk Login (Authentication)
+    implementation("com.google.firebase:firebase-auth")
+    // 3. Baris wajib untuk Database (Firestore)
+    implementation("com.google.firebase:firebase-firestore")
+    // 4.Baris Analytics dari Firebase Console
+    implementation("com.google.firebase:firebase-analytics")
+    // 5. Tambah Library
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
 }
