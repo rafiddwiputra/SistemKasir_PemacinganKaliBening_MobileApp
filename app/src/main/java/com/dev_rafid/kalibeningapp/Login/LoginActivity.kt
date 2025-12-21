@@ -15,13 +15,15 @@ import com.dev_rafid.kalibeningapp.R
 import com.dev_rafid.kalibeningapp.Register.RegisterActivity
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.GoogleApiActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
 import androidx.activity.result.contract.ActivityResultContracts
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.serialization.builtins.IntArraySerializer
 
 
 class LoginActivity : AppCompatActivity() {
@@ -34,6 +36,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_login)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.warna_utama)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -160,14 +163,52 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "Login Google Berhasil!", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, FragmentActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                } else {
-                    Toast.makeText(this, "Autentikasi Firebase Gagal.", Toast.LENGTH_SHORT).show()
+                    val user = auth.currentUser
+                    val userId = user?.uid
+                    val db = FirebaseFirestore.getInstance()
+
+                    if (userId != null) {
+                        // 1. Cek terlebih dahulu apakah data user sudah ada di firestore
+                        db.collection("users").document(userId).get()
+                            .addOnSuccessListener { document ->
+                                if (!document.exists()) {
+                                    // 2 Jika belum ada (user baru via google), simpan datanya
+                                    val userData = hashMapOf(
+                                        "nama" to user.displayName, // Digunakan untuk mengambil nama dari akun Google
+                                        "email" to user.email,
+                                        "role" to "admin kasir:" // Default Role
+                                    )
+
+                                    db.collection("users").document(userId).set(userData)
+                                        .addOnSuccessListener {
+                                            pindahKeDashboard()
+                                        }
+                                } else {
+                                    // 3. Jika sudah ada, langsung masuk aja
+                                    pindahKeDashboard()
+                                }
+                            }
+                    }else {
+                        Toast.makeText(this, "Autentikasi Firebase Gagal.", Toast.LENGTH_SHORT).show()
+
+                }
                 }
             }
+
+    }
+    // Fungsi tambahan agar kode lebih rapi
+    private fun pindahKeDashboard(){
+        Toast.makeText(
+            this,
+            "Login Berhasil",
+            Toast.LENGTH_SHORT
+        ).show()
+        val intent = Intent(
+            this,
+            FragmentActivity::class.java
+        )
+        startActivity(intent)
+        finish()
     }
 
     // Kode ini untuk ketika User sudah melakukan Registrasi dan data dari User tersebut sudah tersimpan di Firebase maka +

@@ -62,4 +62,5 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     // 5. Tambah Library
     implementation("com.google.android.gms:play-services-auth:21.0.0")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 }

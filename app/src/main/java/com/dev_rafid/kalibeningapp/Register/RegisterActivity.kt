@@ -2,7 +2,6 @@ package com.dev_rafid.kalibeningapp.Register
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log.e
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -86,7 +85,7 @@ class RegisterActivity : AppCompatActivity() {
                         val userMap = hashMapOf(
                             "nama" to username,
                             "email" to email,
-                            "role" to "admin"
+                            "role" to "admin kasir:"
                         )
                         if (userId != null) {
                             db.collection("users").document(userId)
