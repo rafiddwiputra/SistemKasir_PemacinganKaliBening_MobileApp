@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.media.Image
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -70,6 +71,33 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
+    // Fungsi yang digunakan untuk menampilkan foto profil ketika diklik
+    private fun tampilkanGambarFull(imageView: ImageView) {
+        // Mengambil gambar dari ImageView yang sedang tampil
+        val drawable=imageView.drawable?: return
+
+        // Membuat ImageView baru untuk di dalam dialog
+        val fullImageView = ImageView(this)
+        fullImageView.setImageDrawable(drawable)
+        fullImageView.adjustViewBounds=true
+
+        // Membuat Dialog
+        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+        builder.setView(fullImageView)
+
+        val dialog = builder.create()
+
+        // Hilangkan background putih bawaan dialog agar terlihat bersih
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        dialog.show()
+
+        // Tutup dialog saat gambar diklik lagi
+        fullImageView.setOnClickListener {
+            dialog.dismiss()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -132,6 +160,12 @@ class EditProfileActivity : AppCompatActivity() {
                     }
                 }
         }
+
+        val ivProfil = findViewById<ImageView>(R.id.iv_userProfile)
+        ivProfile.setOnClickListener {
+            tampilkanGambarFull(ivProfil)
+        }
+
 
         // Aksi saat ikon "Pensil" atau Edit diklik
         ivEdit.setOnClickListener {
@@ -199,6 +233,7 @@ class EditProfileActivity : AppCompatActivity() {
                 .show()
         }
     }
+
 
     // Fungsi utama untuk mengunggah perubahan ke Firestore
     private fun saveProfileToFirestore(

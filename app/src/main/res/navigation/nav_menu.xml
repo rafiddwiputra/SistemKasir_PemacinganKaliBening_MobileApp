@@ -9,7 +9,11 @@
         android:id="@+id/dashboardFragment"
         android:name="com.dev_rafid.kalibeningapp.Dashboard.DashboardFragment"
         android:label="fragment_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_dashboardFragment_to_pemancingFragment"
+            app:destination="@id/pemancingFragment" />
+    </fragment>
     <fragment
         android:id="@+id/riwayatFragment"
         android:name="com.dev_rafid.kalibeningapp.Riwayat.RiwayatFragment"
@@ -20,4 +24,9 @@
         android:name="com.dev_rafid.kalibeningapp.Stok.StokIkanFragment"
         android:label="fragment_stok_ikan"
         tools:layout="@layout/fragment_stok_ikan" />
+    <fragment
+        android:id="@+id/pemancingFragment"
+        android:name="com.dev_rafid.kalibeningapp.Pelanggan.PemancingFragment"
+        android:label="fragment_pemancing"
+        tools:layout="@layout/fragment_pemancing" />
 </navigation>
