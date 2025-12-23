@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dev_rafid.kalibeningapp.Model.Ikan
 import com.dev_rafid.kalibeningapp.R
@@ -38,7 +39,7 @@ class PemancingFragment : Fragment() {
             Toast.makeText(context, "Memilih: ${ikan.namaIkan}", Toast.LENGTH_SHORT).show()
         }
 
-        rvJenisIkan.layoutManager = GridLayoutManager(context, 3)
+        rvJenisIkan.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
         rvJenisIkan.adapter = ikanAdapter
 
         loadDataFromFirestore()
@@ -63,8 +64,6 @@ class PemancingFragment : Fragment() {
                             val item = doc.toObject(Ikan::class.java)
                             if (item != null) {
                                 item.idIkan = doc.id
-
-                                // Gunakan .lowercase() agar filter tidak sensitif huruf besar/kecil
                                 if (item.kategoriIkan.lowercase() == "ikan") {
                                     listIkan.add(item)
                                 }

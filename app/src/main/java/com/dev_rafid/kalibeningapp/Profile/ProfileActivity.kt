@@ -4,8 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.media.Image
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Base64
@@ -25,7 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 
-class EditProfileActivity : AppCompatActivity() {
+class ProfileActivity : AppCompatActivity() {
 
     // Variabel untuk menampung data gambar sementara (Bitmap)
     private var selectedBitmap: Bitmap? = null
@@ -123,10 +121,7 @@ class EditProfileActivity : AppCompatActivity() {
         val btnSimpan = findViewById<Button>(R.id.btn_simpanProfile)
         val ivEdit = findViewById<ImageView>(R.id.iv_editProfile)
         val tvNamaHeader = findViewById<TextView>(R.id.tv_namaAdminProfile)
-
-        // Pastikan di XML ID et_namaUserProfile menggunakan tag <EditText> agar bisa diketik
         val etNamaUser = findViewById<EditText>(R.id.et_namaUserProfile)
-
         val tvEmailUser = findViewById<TextView>(R.id.tv_emailUserProfile)
         val ivKamera = findViewById<ImageView>(R.id.iv_kamera)
         val ivProfile = findViewById<ImageView>(R.id.iv_userProfile)
@@ -217,7 +212,7 @@ class EditProfileActivity : AppCompatActivity() {
                 .show()
         }
 
-        // Logika untuk keluar dari akun (Logout)
+        // Fungsi untuk keluar dari halaman profile dengan klik button
         btnKeluar.setOnClickListener {
             androidx.appcompat.app.AlertDialog.Builder(this)
                 .setTitle("Keluar Akun")

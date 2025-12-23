@@ -11,14 +11,12 @@ import android.widget.TextView
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.dev_rafid.kalibeningapp.Profile.EditProfileActivity
+import com.dev_rafid.kalibeningapp.Profile.ProfileActivity
 import com.dev_rafid.kalibeningapp.R
 import android.util.Base64
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-
-
 
 class DashboardFragment : Fragment() {
 
@@ -111,8 +109,8 @@ class DashboardFragment : Fragment() {
 
         // 2. Tambahkan Listener untuk klik
         btnEditProfile.setOnClickListener {
-            // Pindah ke EditProfileActivity
-            val intent = Intent(requireContext(), EditProfileActivity::class.java)
+            // Pindah ke ProfileActivity
+            val intent = Intent(requireContext(), ProfileActivity::class.java)
             startActivity(intent)
         }
         // 4. Pindahkan return view ke baris paling terakhir

@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KaliBeningApp">
         <activity
-            android:name=".Profile.EditProfileActivity"
+            android:name=".Profile.ProfileActivity"
             android:exported="false">
         </activity>
         <activity
